@@ -1,0 +1,29 @@
+[
+  {
+    "word": "call",
+    "audioID": "18V22zrL_pWkiKFsmEPM3t1jI8T2YiV-r",
+    "definitions": [
+      {
+        "partOfSpeech": "verb",
+        "definition": "to cry out in a loud voice",
+        "example": "He called her name to see if she was home"
+      },
+      {
+        "partOfSpeech": "noun",
+        "definition": "to speak loudly, as to attract attention",
+        "example": "She called to the children"
+      }
+    ]    
+  },
+  {
+    "word": "budget",
+    "audioID": "1xjUABKlq58Dfnbl5u3d7QfoUIB4Bu1iY",
+    "definitions": [
+      {
+        "partOfSpeech": "noun",
+        "definition": "an estimate of income and expenditure for a set period of time",
+        "example": "keep within the household budget"
+      }
+    ]
+  }
+]
