@@ -1,4 +1,5 @@
 const path = require('path')
+const cors = require('cors')
 const express = require('express')
 const startDB = require('./db/db')
 const wordList = require('./words')
@@ -8,6 +9,7 @@ const client = new MongoClient(uri)
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 app.use(express.static('./frontend/dist'))
 
