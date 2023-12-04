@@ -36,7 +36,8 @@ function App() {
   }
 
   const check = () => {
-    if (inputRef.current.value == currentWord.word) console.log("Correct")
+    const userInput = inputRef.current.value
+    if (userInput.toLowerCase() == currentWord.word) console.log("Correct")
     else console.log("Wrong")
   }
 
