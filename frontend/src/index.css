@@ -37,3 +37,22 @@ input {
 .option:hover {
   color: blue;
 }
+
+@keyframes blink {
+  from {
+    background-color: (243 244 246);
+  }
+
+  30% {
+    background-color: rgb(60, 60, 162);
+  }
+
+  to {
+    background-color: (243 244 246);
+  }
+}
+
+.sound {
+  animation-name: blink;
+  animation-duration: 1s;
+}
