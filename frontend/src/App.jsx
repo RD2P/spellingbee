@@ -7,21 +7,39 @@ function App() {
 
   const [start, setStart] = useState(false)
   const [src, setSrc] = useState('tempaudio')
+  const [currentWord, setCurrentWord] = useState('old')
 
   const grabAudio = async () => {
-    const data = await axios.get('http://localhost:4000/api/v1/random')
-    const newSrc = await data.data.audio
-    setSrc(newSrc)
+    axios.get('http://localhost:4000/api/v1/random')
+      .then(res => {
+        console.log(res.data.word)
+        const newWord = res.data.word
+        setCurrentWord(newWord)
+        const newSrc = res.data.audio
+        setSrc(newSrc)
+      })
+      .catch(err => console.log(err))
   }
 
   const handleStart = () => {
     grabAudio()
     setStart(true)
+  }
 
+  // const next = () => {
+  //   console.log(currentWord)
+  // }
+
+  const input = document.getElementById("input")
+
+  const check = () => {
+    if (input.value == currentWord) console.log("Correct")
+    else console.log("Wrong")
   }
 
   return (
     <>
+
       <div className='max-w-7xl mx-auto mt-12 relative'>
 
         <div className={`w-full h-full absolute opacity-50 rounded-xl  ${!start ? 'z-10 bg-gray-400' : ''}`}></div>
@@ -36,8 +54,9 @@ function App() {
               <audio id="sound" autoPlay src={src}>Your browser does not support audio</audio>
             </div>
             <div>
-              <div>
-                <input className='p-4 rounded-md w-96 text-3xl' type="text" placeholder="Type answer here" />
+              <div className='flex'>
+                <input className='p-4 rounded-md w-96 text-3xl' type="text" id="input" placeholder="Spell the word" />
+                <button className='bg-white p-6 ml-4' onClick={check}>Check</button>
               </div>
             </div>
             <div className='flex rounded-lg justify-center p-8 bg-blue-400'>
