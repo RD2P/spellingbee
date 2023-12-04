@@ -15,3 +15,25 @@ body {
 #root {
   padding: 0;
 }
+
+button {
+  border-radius: 8px;
+}
+
+input {
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+#input:focus {
+  border: 2px solid blue;
+}
+
+.option {
+  cursor: pointer;
+}
+
+.option:hover {
+  color: blue;
+}
