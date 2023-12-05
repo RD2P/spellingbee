@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 import sound from './assets/sound.png'
 import mic from './assets/microphone.png'
 import axios from 'axios'
+import ding from './assets/ding.mp3'
+import beep from './assets/beep.mp3'
 
 function App() {
 
@@ -9,8 +11,13 @@ function App() {
   const [src, setSrc] = useState('tempaudio')
   const [currentWord, setCurrentWord] = useState('old')
   const [showInput, setShowInput] = useState(false)
+  const [result, setResult] = useState(null)
 
   const inputRef = useRef(null)
+  const definitionRef = useRef(null)
+  const partOfSpeechRef = useRef(null)
+  const resultRef = useRef(null)
+  const soundEffectRef = useRef(null)
 
   const audio = document.getElementById("sound")
   const definition = document.getElementById("definition")
@@ -37,8 +44,24 @@ function App() {
 
   const check = () => {
     const userInput = inputRef.current.value
-    if (userInput.toLowerCase() == currentWord.word) console.log("Correct")
-    else console.log("Wrong")
+    if (userInput.toLowerCase() == currentWord.word) {
+      setResult(true)
+      resultRef.current.innerText = "Correct!"
+      soundEffectRef.current.src = beep
+      soundEffectRef.current
+    } else {
+      setResult(false)
+      resultRef.current.innerText = "Wrong"
+      soundEffectRef.current.src = ding
+    }
+    setTimeout(() => {
+      resultRef.current.innerText = ''
+      grabWord()
+    }, 2000)
+    definitionRef.current.innerText = ''
+    partOfSpeechRef.current.innerText = ''
+    inputRef.current.value = ''
+    setShowInput(false)
   }
 
   const blink = () => {
@@ -62,11 +85,6 @@ function App() {
     partOfSpeech.innerText = `Part of speech: ${currentWord.definitions[0].partofSpeech}`
   }
 
-  const handleGetNew = () => {
-    grabWord()
-    blink()
-  }
-
   const handleSpell = () => {
     setShowInput(prev => !prev)
   }
@@ -84,6 +102,7 @@ function App() {
 
         <div className={`w-full h-full absolute opacity-50 rounded-xl  ${!start ? 'z-10 bg-gray-400' : ''}`}></div>
 
+        <audio autoPlay ref={soundEffectRef}>Your browser does not support audio</audio>
         {!start && <button className='absolute top-20 right-20 bg-green-600 hover:bg-green-500 p-6 text-white text-2xl z-30' onClick={handleStart}>Start</button>}
 
         <div className="bg-orange-300 py-16 rounded-2xl relative">
@@ -93,8 +112,6 @@ function App() {
               <img src={sound} />
               <audio id="sound" autoPlay src={src}>Your browser does not support audio</audio>
             </div>
-            <button onClick={handleGetNew} className='p-6 bg-red-500 cursor-pointer'>Get new</button>
-
 
             {showInput &&
               <div className='flex'>
@@ -103,13 +120,14 @@ function App() {
               </div>
             }
 
+            <div id="result" ref={resultRef} className={`text-4xl font-bold ${result ? 'text-green-400' : 'text-red-400'}`}></div>
 
-            <div className='text-lg'>
-              <p id="definition"></p>
+            <div className='text-lg w-2/3'>
+              <p id="definition" ref={definitionRef} className='text-3xl text-gray-600 text-center'></p>
             </div>
 
             <div>
-              <p id="part-of-speech"></p>
+              <p id="part-of-speech" ref={partOfSpeechRef} className='text-3xl text-gray-600 text-center'></p>
             </div>
 
 
